@@ -1,4 +1,7 @@
 @echo off
+cls
+cd /d %~dp0
+
 set DOCKER_IMAGE=dnos-builder
 
 REM Docker container builder!
@@ -20,6 +23,7 @@ echo 'Build finished'
 REM Move the kernel to the ISO directory and create the bootable ISO
 echo Moving kernel and creating bootable ISO...
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "cd /build && mkdir -p Meta/Target/iso/boot/grub"
+docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "cp Meta/Enviroment/grub.cfg Meta/Target/iso/boot/grub/grub.cfg"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "mv /build/target/x86_64-unknown-none/release/dnos /build/Meta/Target/iso/boot/dnos-kernel.elf"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "grub-mkrescue -o /build/Meta/Target/dnos.iso /build/Meta/Target/iso"
 
