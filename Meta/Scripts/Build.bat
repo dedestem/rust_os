@@ -12,8 +12,8 @@ if %ERRORLEVEL% neq 0 (
     docker build -t %DOCKER_IMAGE% ../Enviroment
 )
 
-REM Build the kernel using Docker
-docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "cd /build && cargo build --target x86_64-unknown-none --release"
+REM Set CARGO_TARGET_DIR inside Docker and build the kernel
+docker run --rm -v "%cd%\..\..:/build" -e CARGO_TARGET_DIR=/build/Meta/Target/Rust %DOCKER_IMAGE% bash -c "cd /build && cargo build --target x86_64-unknown-none --release"
 if %ERRORLEVEL% neq 0 (
     echo Build process failed inside Docker. Exiting...
     exit /b %ERRORLEVEL%
