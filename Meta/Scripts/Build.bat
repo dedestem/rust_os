@@ -25,6 +25,7 @@ echo Moving kernel and creating bootable ISO...
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "cd /build && mkdir -p Meta/Target/iso/boot/grub"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "cp Meta/Enviroment/grub.cfg Meta/Target/iso/boot/grub/grub.cfg"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "rm /build/Meta/Target/iso/boot/dnos-kernel.elf"
+docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "objdump -h Meta/Target/Rust/x86_64-unknown-none/release/dnos"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "mv /build/Meta/Target/Rust/x86_64-unknown-none/release/dnos /build/Meta/Target/iso/boot/dnos-kernel.elf"
 docker run --rm -v "%cd%\..\..:/build" %DOCKER_IMAGE% bash -c "grub-mkrescue -o /build/Meta/Target/dnos.iso /build/Meta/Target/iso"
 
