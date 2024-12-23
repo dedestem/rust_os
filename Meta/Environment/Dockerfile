@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     binutils \
     curl \
+    tree \
     && apt-get clean
 
 # Get rust
